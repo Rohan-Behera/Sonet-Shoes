@@ -3,6 +3,7 @@ import sqlalchemy.dialects.postgresql as pg
 import uuid
 from sqlalchemy import Text
 from datetime import datetime
+from typing import Optional
 
 
 
@@ -16,8 +17,13 @@ class User(SQLModel, table=True):
     email: str
     first_name: str
     last_name: str
+    auth_provider: str = Field(default="local")
+    is_verified: bool = Field(default=False)
     created_on: datetime = Field(default_factory=datetime.now, sa_column=Column(pg.TIMESTAMP, default=datetime.now))
     modify_on : datetime = Field(default_factory=datetime.now, sa_column=Column(pg.TIMESTAMP, default=datetime.now))
+    
+    orders: list["Orders"] = Relationship(back_populates="user")
+    
     def __repr__(self):
         return f"<User {self.username}>"
 
@@ -43,8 +49,10 @@ class Orders(SQLModel, table=True):
     uid: uuid.UUID = Field(
         sa_column=Column(pg.UUID, nullable=False, primary_key=True, default=uuid.uuid4)
     )
+    user_uid: uuid.UUID = Field(foreign_key="users.uid", nullable=False)
     customer_name: str
     customer_email: str
     address: str
     items: str = Field(sa_column=Column(Text, nullable=False))
+    user: Optional[User] = Relationship(back_populates="orders")
 
