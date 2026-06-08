@@ -2,7 +2,7 @@ from fastapi import APIRouter, status, Depends
 from src.db.main import get_session
 from sqlmodel.ext.asyncio.session import AsyncSession
 from .schemas import UserCreateModel, UserLoginModel, TokenDetailsModel
-from .dependencies import get_user_service, RefreshTokenBearer, AccesTokenBearer
+from .dependencies import get_user_service, RefreshTokenBearer, AccessTokenBearer
 from .service import UserService
 
 auth_router = APIRouter()
@@ -19,14 +19,12 @@ async def user_login(login_cred: UserLoginModel,
                      user_service: UserService = Depends(get_user_service)):
     return await user_service.login(login_cred, session)
 
-@auth_router.get('/refresh-token')
-async def get_new_refresh_token(token: TokenDetailsModel = Depends(RefreshTokenBearer()), 
-                            session: AsyncSession = Depends(get_session),
+@auth_router.post('/refresh-token')
+async def get_new_refresh_token(token: TokenDetailsModel = Depends(RefreshTokenBearer()),
                             user_service: UserService = Depends(get_user_service)):
-    return await user_service.get_new_refresh_token(token, session)
+    return await user_service.get_new_refresh_token(token)
 
-@auth_router.get('/access-token')
-async def get_new_access_token(token: TokenDetailsModel = Depends(AccesTokenBearer()), 
-                            session: AsyncSession = Depends(get_session),
+@auth_router.post('/access-token')
+async def get_new_access_token(token: TokenDetailsModel = Depends(AccessTokenBearer()),
                             user_service: UserService = Depends(get_user_service)):
-    return await user_service.get_new_access_token(token, session)
+    return await user_service.get_new_access_token(token)

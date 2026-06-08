@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends, HTTPException
 from .service import OAuthService
 from .dependencies import get_oauth_service
 from src.db.main import get_session
@@ -17,4 +17,6 @@ async def google_login(request: Request,
 async def google_callback(request: Request,
                           session: AsyncSession = Depends(get_session),
                           oauth_service: OAuthService = Depends(get_oauth_service)):
-    return await oauth_service.create_access_token(request, session)
+    if request.query_params.get('error'):
+           raise HTTPException(status_code=400, detail="OAuth cancelled")
+    return await oauth_service.authenticate_user(request, session)

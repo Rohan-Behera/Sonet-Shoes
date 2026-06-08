@@ -12,7 +12,7 @@ class TokenDetailsModel(BaseModel):
 class UserCreateModel(BaseModel):
     first_name: str
     last_name: str
-    username: str = Field(max_length = 8)
+    username: str
     email: str = Field(max_length = 40)
     password: str = Field(min_length = 8)
 

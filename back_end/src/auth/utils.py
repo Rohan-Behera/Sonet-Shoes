@@ -39,7 +39,7 @@ def create_refresh_token(user_data: dict, expiry: timedelta = None) -> str:
         user_details=user_data,
         exp=(datetime.now() + expiry_delta).timestamp(),
         type="refresh",
-        refresh=False,
+        refresh=True,
         jti=str(uuid.uuid4())
     )
     return jwt.encode(payload=payload.model_dump(), key=Config.SECRET_KEY, algorithm=Config.JWT_ALGORITHM)
@@ -49,7 +49,5 @@ def decode_token(token: str) -> TokenDetailsModel:
     try:
         payload = jwt.decode(jwt=token, key=Config.SECRET_KEY, algorithms=[Config.JWT_ALGORITHM])
         return TokenDetailsModel.model_validate(payload)
-    except PyJWTError:
-        raise InvalidToken()
-    except ValidationError:
+    except (PyJWTError, ValidationError):
         raise InvalidToken()

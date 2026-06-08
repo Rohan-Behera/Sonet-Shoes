@@ -74,16 +74,10 @@ class UserService:
             user=UserResponseModel(email=user.email, uid=user.uid)
         )
     
-    async def get_new_refresh_token(self, token: TokenDetailsModel, session: AsyncSession):
-        if token.exp < datetime.now().timestamp():
-            raise InvalidToken()
-        
+    async def get_new_refresh_token(self, token: TokenDetailsModel):        
         return create_refresh_token(user_data=token.user_details)
             
-    async def get_new_access_token(self, token:TokenDetailsModel, session: AsyncSession):
-        if token.exp < datetime.now().timestamp():
-            raise InvalidToken()
-        
+    async def get_new_access_token(self, token:TokenDetailsModel):
         return create_access_token(user_data=token.user_details)
     
     async def upsert_oauth_users(

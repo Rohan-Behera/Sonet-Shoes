@@ -21,7 +21,7 @@ class OAuthService():
         redirect_url = Config.GOOGLE_REDIRECT_URI
         return await oauth.google.authorize_redirect(request, redirect_url)
     
-    async def create_access_token(self, request: Request, session: AsyncSession):
+    async def authenticate_user(self, request: Request, session: AsyncSession):
         token = await oauth.google.authorize_access_token(request)
         user_info = token.get('userinfo')
 
