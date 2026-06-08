@@ -1,0 +1,154 @@
+<div class="auth-wrapper">
+  <div class="auth-left">
+    <div class="brand">
+      <span class="brand-icon">👟</span>
+      <h1 class="brand-name">Sonet Shoes</h1>
+    </div>
+    <p class="brand-tagline">Every step starts with the right pair.</p>
+    <div class="brand-decoration">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="circle circle-3"></div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>Create account</h2>
+        <p>Join Sonet Shoes and find your perfect pair</p>
+      </div>
+
+      <button class="btn-google" (click)="loginWithGoogle()" type="button">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+          <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+          <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+          <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <div class="divider"><span>or</span></div>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first_name">First name</label>
+            <input
+              id="first_name"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="first_name.invalid && first_name.touched"
+              formControlName="first_name"
+              placeholder="John"
+              autocomplete="given-name"
+            />
+            <div class="invalid-feedback" *ngIf="first_name.invalid && first_name.touched">
+              <span *ngIf="first_name.errors?.['required']">Required.</span>
+              <span *ngIf="first_name.errors?.['minlength']">Min 2 characters.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="last_name">Last name</label>
+            <input
+              id="last_name"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="last_name.invalid && last_name.touched"
+              formControlName="last_name"
+              placeholder="Doe"
+              autocomplete="family-name"
+            />
+            <div class="invalid-feedback" *ngIf="last_name.invalid && last_name.touched">
+              <span *ngIf="last_name.errors?.['required']">Required.</span>
+              <span *ngIf="last_name.errors?.['minlength']">Min 2 characters.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            class="form-control"
+            [class.is-invalid]="username.invalid && username.touched"
+            formControlName="username"
+            placeholder="johndoe"
+            autocomplete="username"
+          />
+          <div class="invalid-feedback" *ngIf="username.invalid && username.touched">
+            <span *ngIf="username.errors?.['required']">Username is required.</span>
+            <span *ngIf="username.errors?.['minlength']">Min 3 characters.</span>
+            <span *ngIf="username.errors?.['pattern']">No spaces allowed.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            [class.is-invalid]="email.invalid && email.touched"
+            formControlName="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+          />
+          <div class="invalid-feedback" *ngIf="email.invalid && email.touched">
+            <span *ngIf="email.errors?.['required']">Email is required.</span>
+            <span *ngIf="email.errors?.['email']">Enter a valid email.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-with-action">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control"
+              [class.is-invalid]="password.invalid && password.touched"
+              formControlName="password"
+              placeholder="Min. 6 characters"
+              autocomplete="new-password"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="showPassword = !showPassword"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+            >
+              <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </div>
+          <div class="invalid-feedback" *ngIf="password.invalid && password.touched">
+            <span *ngIf="password.errors?.['required']">Password is required.</span>
+            <span *ngIf="password.errors?.['minlength']">Minimum 6 characters.</span>
+          </div>
+        </div>
+
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <button
+          type="submit"
+          class="btn-primary-auth"
+          [disabled]="loading"
+        >
+          <span *ngIf="!loading">Create Account</span>
+          <span *ngIf="loading" class="d-flex align-items-center gap-2">
+            <span class="spinner-border spinner-border-sm"></span> Creating account...
+          </span>
+        </button>
+      </form>
+
+      <p class="auth-footer">
+        Already have an account? <a routerLink="/auth/login">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>
