@@ -47,4 +47,5 @@ async def get_current_user(token_details: TokenDetailsModel = Depends(AccessToke
     user = await user_service.get_user_by_email(email=user_email, session=session)
     if not user:
         raise UserNotFound()
+    
     return user
