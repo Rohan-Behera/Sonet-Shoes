@@ -1,0 +1,42 @@
+<div class="app-layout" [class.collapsed]="collapsed">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="brand-icon">👟</span>
+      <span class="brand-name">Sonet Shoes</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      
+        *ngFor="let item of navItems"
+        class="nav-item"
+        [class.active]="isActive(item.route)"
+        [routerLink]="item.route"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span class="nav-label">{{ item.label }}</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Toggle button -->
+  <button class="sidebar-toggle" (click)="toggleSidebar()">
+    <mat-icon>{{ collapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+  </button>
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <span class="top-bar-title">{{ router.url.split('/')[1] | titlecase }}</span>
+    <button class="logout-btn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </div>
+
+  <!-- Main content -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

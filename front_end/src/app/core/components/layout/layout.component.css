@@ -1,0 +1,257 @@
+/* ── Layout ─────────────────────────────────────────────── */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: #111827;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: width 0.25s ease, transform 0.25s ease;
+  overflow: hidden;
+}
+
+.app-layout.collapsed .sidebar {
+  width: 68px;
+}
+
+/* ── Brand ───────────────────────────────────────────────── */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.25rem 1.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.brand-icon { font-size: 1.6rem; flex-shrink: 0; }
+
+.brand-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+  font-family: 'DM Sans', sans-serif;
+  transition: opacity 0.2s ease;
+}
+
+.app-layout.collapsed .brand-name {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Nav ─────────────────────────────────────────────────── */
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem 0.75rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.65rem 0.875rem;
+  border-radius: 10px;
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.925rem;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item mat-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.nav-item:hover {
+  background: rgba(255,255,255,0.07);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: rgba(99, 102, 241, 0.18);
+  color: #a5b4fc;
+}
+
+.nav-item.active mat-icon {
+  color: #a5b4fc;
+}
+
+.nav-label {
+  transition: opacity 0.2s ease;
+}
+
+.app-layout.collapsed .nav-label {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Toggle button ───────────────────────────────────────── */
+.sidebar-toggle {
+  position: fixed;
+  top: 1.25rem;
+  left: 222px;
+  z-index: 200;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #1f2937;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: left 0.25s ease, background 0.15s;
+  padding: 0;
+}
+
+.sidebar-toggle mat-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.sidebar-toggle:hover {
+  background: #374151;
+  color: #fff;
+}
+
+.app-layout.collapsed .sidebar-toggle {
+  left: 50px;
+}
+
+/* ── Main content ────────────────────────────────────────── */
+.main-content {
+  margin-left: 240px;
+  flex: 1;
+  padding: 2rem;
+  background: #f9fafb;
+  min-height: 100vh;
+  transition: margin-left 0.25s ease;
+}
+
+.app-layout.collapsed .main-content {
+  margin-left: 68px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 240px !important;
+  }
+
+  .app-layout.collapsed .sidebar {
+    transform: translateX(0);
+    width: 240px !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+
+  .sidebar-toggle {
+    left: 1rem !important;
+    top: 1rem;
+    background: #111827;
+    border-color: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+}
+
+/* ── Top bar ─────────────────────────────────────────────── */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 240px;
+  right: 0;
+  height: 56px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 99;
+  transition: left 0.25s ease;
+}
+
+.app-layout.collapsed .top-bar {
+  left: 68px;
+}
+
+.top-bar-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  text-transform: capitalize;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.875rem;
+  background: none;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  color: #ef4444;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.logout-btn:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.logout-btn mat-icon {
+  font-size: 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* ── Push main content down below top bar ────────────────── */
+.main-content {
+  margin-left: 240px;
+  margin-top: 56px;        /* ← add this */
+  padding: 2rem;
+  background: #f9fafb;
+  min-height: calc(100vh - 56px);
+  transition: margin-left 0.25s ease;
+}
+
+.app-layout.collapsed .main-content {
+  margin-left: 68px;
+}

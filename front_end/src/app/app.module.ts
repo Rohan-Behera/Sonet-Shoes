@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { withInterceptors, provideHttpClient } from '@angular/common/http';
 import { jwtInterceptor } from './auth/services/jwt.interceptor';
+import { AuthModule } from './auth/auth.module';
+import { CoreModules } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { jwtInterceptor } from './auth/services/jwt.interceptor';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AuthModule,
+    CoreModules
   ],
   providers: [
     provideHttpClient(

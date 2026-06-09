@@ -4,9 +4,9 @@ import { LoginComponent } from "./components/login/login.component";
 import { SignupComponent } from "./components/signup/signup.component";
 import { OauthCallbackComponent } from "./components/oauth-callback/oauth-callback.component";
 import { CommonModule } from "@angular/common";
-import { ReactiveFormsModule } from "@angular/forms"
-import { MatIconModule } from "@angular/material/icon"
+import { ReactiveFormsModule } from "@angular/forms";
 import { guestGuard } from "./services/auth.guard";
+import { MatIconModule } from "@angular/material/icon";
 
 
 const routes: Routes=[
